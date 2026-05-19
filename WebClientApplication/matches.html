@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- Enables responsive layout on different screen sizes -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matches | Club System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <h2>⚽ Club System</h2>
+      <p class="role-label">Club Portal</p>
+
+      <!-- Sidebar navigation menu -->
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link admin-nav" style="display: block;">Dashboard</a>
+        <a href="players.html" class="nav-link">Players</a>
+        <a href="teams.html" class="nav-link">Teams</a>
+        <a href="matches.html" class="nav-link">Matches</a>
+        <a href="league-table.html" class="nav-link">League Table</a>
+        <a href="news.html" class="nav-link">News</a>
+        <a href="users.html" class="nav-link admin-nav" style="display: block;">Users</a>
+      </nav>
+
+      <!-- Logout button clears the current user session -->
+      <button onclick="logout()" class="logout-btn">Logout</button>
+    </aside>
+
+    <!-- Main matches page content -->
+    <main class="main-content">
+      <header class="page-header">
+        <h1>Fixtures &amp; Results</h1>
+        <p>Manage fixtures, scores, goal scorers, and match results.</p>
+      </header>
+
+      <!-- Admin-only form used to create or edit matches -->
+      <section class="card admin-only match-entry-card">
+        <div class="card-header">
+          <h2 id="matchFormTitle">Add Match</h2>
+          <p>Create a fixture, record the score, and add multiple goal events before saving.</p>
+        </div>
+
+        <!-- Team selection inputs -->
+        <div class="match-form-grid">
+          <div class="form-group">
+            <label for="home_team">Home Team</label>
+            <input type="text" id="home_team" list="teamSuggestions" placeholder="Start typing home team" />
+          </div>
+
+          <div class="form-group">
+            <label for="away_team">Away Team</label>
+            <input type="text" id="away_team" list="teamSuggestions" placeholder="Start typing away team" />
+          </div>
+        </div>
+
+        <!-- Match details and score inputs -->
+        <div class="match-form-grid four-column-grid">
+          <div class="form-group">
+            <label for="match_date">Match Date</label>
+            <input type="date" id="match_date" />
+          </div>
+
+          <div class="form-group">
+            <label for="match_status">Match Status</label>
+            <select id="match_status">
+              <option value="upcoming">Upcoming</option>
+              <option value="finished">Finished</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="home_score">Home Score</label>
+            <input type="number" id="home_score" min="0" placeholder="Optional" />
+          </div>
+
+          <div class="form-group">
+            <label for="away_score">Away Score</label>
+            <input type="number" id="away_score" min="0" placeholder="Optional" />
+          </div>
+        </div>
+
+        <!-- Goal scorer section supports multiple goal events per match -->
+        <div class="goal-scorer-box">
+          <div class="goal-event-heading">
+            <div>
+              <h3>Goal Events</h3>
+              <p>Add each goal before saving the match. This supports multiple scorers and repeat scorers.</p>
+            </div>
+          </div>
+
+          <div class="match-form-grid three-column-grid">
+            <div class="form-group">
+              <label for="goal_player_name">Goal Scorer</label>
+              <input type="text" id="goal_player_name" list="playerSuggestions" placeholder="Start typing player" />
+            </div>
+
+            <div class="form-group">
+              <label for="goal_team_name">Scoring Team</label>
+              <input type="text" id="goal_team_name" list="teamSuggestions" placeholder="Start typing team" />
+            </div>
+
+            <div class="form-group">
+              <label for="goal_minute">Minute</label>
+              <input type="number" id="goal_minute" min="1" placeholder="e.g. 34" />
+            </div>
+          </div>
+
+          <button type="button" class="secondary-btn add-goal-btn" onclick="addPendingGoalEvent()">
+            Add Goal to Match
+          </button>
+
+          <!-- Pending goal events are rendered here before the match is saved -->
+          <div id="pendingGoalsList" class="pending-goals-list">
+            <p class="pending-empty">No goal events added yet.</p>
+          </div>
+        </div>
+
+        <!-- Datalist elements provide autocomplete suggestions -->
+        <datalist id="teamSuggestions"></datalist>
+        <datalist id="playerSuggestions"></datalist>
+
+        <!-- Hidden input stores match ID when editing an existing match -->
+        <input type="hidden" id="editMatchId" />
+
+        <div class="form-actions match-form-actions">
+          <button class="primary-btn" id="submitMatchBtn" onclick="saveMatch()">
+            Add Match
+          </button>
+
+          <button
+            type="button"
+            class="secondary-btn"
+            id="cancelMatchEditBtn"
+            onclick="cancelMatchEdit()"
+            style="display: none;"
+          >
+            Cancel Edit
+          </button>
+        </div>
+      </section>
+
+      <!-- Match list and filtering section -->
+      <section class="card matches-card">
+        <div class="matches-page-header">
+          <div>
+            <h2>All Matches</h2>
+            <p>Browse fixtures, results, and goal scorer details.</p>
+          </div>
+
+          <!-- Filter buttons allow users to view all, finished, or upcoming matches -->
+          <div class="match-filter-bar">
+            <button onclick="filterMatches('all')" class="secondary-btn">All</button>
+            <button onclick="filterMatches('finished')" class="secondary-btn">Finished</button>
+            <button onclick="filterMatches('upcoming')" class="secondary-btn">Upcoming</button>
+          </div>
+
+          <!-- Search input filters matches by team name -->
+          <input
+            type="text"
+            id="searchMatches"
+            class="match-search-input"
+            placeholder="Search by team name..."
+          />
+
+        </div>
+
+        <!-- Match records are populated dynamically from the REST API -->
+        <div class="matches-list-wrapper">
+          <ul id="matchList"></ul>
+        </div>
+      </section>
+    </main>
+  </div> 
+
+  <!-- Supporting JavaScript files for team data and match functionality -->
+  <script src="teams.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

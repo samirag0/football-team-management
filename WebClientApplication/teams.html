@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+    <!-- Enables responsive layout across different screen sizes --> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teams | Football Team Manager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="dashboard-layout">
+    <!-- Sidebar navigation menu -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div>
+          <h2>⚽ Club System</h2>
+        </div>
+      </div>
+
+      <p class="role-label">Club Portal</p>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link admin-nav" style="display: block;">Dashboard</a>
+        <a href="players.html" class="nav-link">Players</a>
+        <a href="teams.html" class="nav-link">Teams</a>
+        <a href="matches.html" class="nav-link">Matches</a>
+        <a href="league-table.html" class="nav-link">League Table</a>
+        <a href="news.html" class="nav-link">News</a>
+        <a href="users.html" class="nav-link admin-nav" style="display: block;">Users</a>
+      </nav>
+
+      <!-- Logout button clears the current user session -->
+      <button onclick="logout()" class="logout-btn">Logout</button>
+      
+    </aside>
+
+    <!-- Main teams page content -->
+    <main class="main-content">
+      <!-- Teams page header -->
+      <header class="page-header">
+        <div>
+          <h1>Teams</h1>
+          <p>View, manage, and create teams.</p>
+        </div>
+      </header>
+
+      <!-- Overview cards showing system and team information -->
+      <section class="top-grid">
+        <div class="card overview-card">
+          <div class="card-header">
+            <h2>Team Overview</h2>
+            <p>Quick summary</p>
+          </div>
+
+          <div class="overview-list">
+            <div class="overview-item">
+              <span>Data Source</span>
+              <strong>REST API</strong>
+            </div>
+
+            <div class="overview-item">
+              <span>Display Type</span>
+              <strong>Live team list</strong>
+            </div>
+
+            <div class="overview-item">
+              <span>Squad Data</span>
+              <strong>Player counts included</strong>
+            </div>
+
+            <div class="overview-item">
+              <span>System Purpose</span>
+              <strong>Team management overview</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="card overview-card">
+          <div class="card-header">
+            <h2>System Info</h2>
+            <p>How teams are used</p>
+          </div>
+
+          <div class="overview-list">
+            <div class="overview-item">
+              <span>Relationships</span>
+              <strong>Players &amp; Matches</strong>
+            </div>
+
+            <div class="overview-item">
+              <span>Usage</span>
+              <strong>Fixtures &amp; Autocomplete</strong>
+            </div>
+
+            <div class="overview-item">
+              <span>Updates</span>
+              <strong>Real-time refresh</strong>
+            </div>
+
+            <div class="overview-item">
+              <span>Validation</span>
+              <strong>Duplicate prevention</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Admin-only form used to create and edit football teams -->
+      <div class="card form-card admin-only">
+        <div class="card-header">
+          <h2 id="teamFormTitle">Add Team</h2>
+          <p>Create or update a team</p>
+        </div>
+
+        <input type="hidden" id="editTeamId" />
+
+        <div class="form-group">
+          <label for="team_name_input">Team Name</label>
+          <input
+            type="text"
+            id="team_name_input"
+            placeholder="Enter team name"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="coach_name">Coach Name</label>
+          <input
+            type="text"
+            id="coach_name"
+            placeholder="Enter coach name"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="stadium_location">
+            Stadium Location
+          </label>
+
+          <input
+            type="text"
+            id="stadium_location"
+            list="stadiumSuggestions"
+            placeholder="Start typing a stadium or city"
+          />
+
+          <datalist id="stadiumSuggestions">
+            <option value="Emirates Stadium, London">
+            <option value="Kingsmeadow, Kingston upon Thames">
+            <option value="Joie Stadium, Manchester">
+            <option value="Leigh Sports Village, Leigh">
+            <option value="Villa Park, Birmingham">
+            <option value="Walton Hall Park, Liverpool">
+            <option value="Broadfield Stadium, Crawley">
+            <option value="King Power Stadium, Leicester">
+            <option value="Ashton Gate Stadium, Bristol">
+            <option value="Selhurst Park, London">
+            <option value="The Valley, London">
+            <option value="The Dripping Pan, Lewes">
+            <option value="Hayes Lane Stadium, Bromley">
+            <option value="Maiden Castle Sports Park, Durham">
+            <option value="St Helens Stadium, St Helens">
+            <option value="Olympic Legacy Park, Sheffield">
+            <option value="Ewood Park, Blackburn">
+            <option value="Elland Road, Leeds">
+            <option value="York Community Stadium, York">
+            <option value="Stadium of Light, Sunderland">
+            <option value="St James' Park, Newcastle">
+          </datalist>
+        </div>
+
+        <div class="form-group">
+          <label for="logo_url">Badge / Logo URL | Recommended: Use a direct badge image URL from Wikipedia or Wikimedia Commons.</label>
+          <input
+            type="text"
+            id="logo_url"
+            placeholder="Paste team badge image URL"
+          />
+        </div>
+
+        <!-- Live preview of the selected team badge image -->
+        <div class="badge-preview-box">
+          <span>Badge Preview</span>
+          <img id="logoPreview" src="" alt="Badge preview" style="display: none;" />
+          <p id="logoPreviewText">No badge selected</p>
+        </div>
+
+        <!-- Team colour customisation inputs -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="primary_color">Primary Accent Colour</label>
+            <input type="color" id="primary_color" value="#2f4356" />
+          </div>
+
+          <div class="form-group">
+            <label for="secondary_color">Secondary Accent Colour</label>
+            <input type="color" id="secondary_color" value="#5d7f8c" />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="primary-btn" id="submitTeamBtn" onclick="saveTeam()">
+            Add Team
+          </button>
+
+          <button
+            type="button"
+            class="secondary-btn"
+            id="cancelTeamEditBtn"
+            onclick="cancelTeamEdit()"
+            style="display: none;"
+          >
+            Cancel Edit
+          </button>
+        </div>
+      </div>
+
+      <!-- Dynamic team list populated from the REST API -->
+      <section class="card teams-card">
+        <div class="card-header teams-header">
+          <div>
+            <h2>All Teams</h2>
+            <p>View all teams and squad size</p>
+          </div>
+
+          <input
+            type="text"
+            id="searchTeam"
+            class="search-input"
+            placeholder="Search teams..."
+          />
+        </div>
+
+        <div class="teams-scroll-wrapper">
+          <div class="teams-list-wrapper">
+            <ul id="teamList"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Google Maps integration displaying selected team locations -->
+      <section class="map-section">
+        <h2>Team Location Map</h2>
+        <div id="mapContainer">
+          <p>Select a team to view its location.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- JavaScript files handling team data, API requests and UI rendering -->
+   
+  <script src="script.js"></script>
+  <script src="teams.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- Enables responsive scaling across desktop and mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>League Table | Club System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="dashboard-layout">
+    <!-- Sidebar navigation menu -->
+    <aside class="sidebar">
+
+      <div class="sidebar-brand">
+        <h2>⚽ Club System</h2>
+      </div>
+
+      <p class="role-label">Club Portal</p>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link admin-nav" style="display: block;">Dashboard</a>
+        <a href="players.html" class="nav-link">Players</a>
+        <a href="teams.html" class="nav-link">Teams</a>
+        <a href="matches.html" class="nav-link">Matches</a>
+        <a href="league-table.html" class="nav-link">League Table</a>
+        <a href="news.html" class="nav-link">News</a>
+        <a href="users.html" class="nav-link admin-nav" style="display: block;">Users</a>
+      </nav>
+      
+      <!-- Logout button clears session and redirects user -->
+      <button onclick="logout()" class="logout-btn">
+        Logout
+      </button>
+
+    </aside>
+
+    <!-- Main league table content -->
+    <main class="main-content">
+
+      <header class="page-header">
+        <div>
+          <h1>League Table</h1>
+          <p>
+            Automatically calculated from completed match results.
+          </p>
+        </div>
+      </header>
+
+      <section class="card">
+        <div class="card-header">
+          <h2>Current Standings</h2>
+          <p>
+            Teams are ranked by points, goal difference, then goals scored.
+          </p>
+        </div>
+        
+        <!-- Dynamic summary cards generated using JavaScript -->
+        <div id="leagueSummaryCards" class="league-summary-grid"></div>
+
+        <!-- Responsive table wrapper -->
+        <div class="table-wrapper">
+          <table class="league-table">
+
+            <thead>
+              <tr>
+                <th>Pos</th>
+                <th>Team</th>
+                <th>P</th>
+                <th>W</th>
+                <th>D</th>
+                <th>L</th>
+                <th>GF</th>
+                <th>GA</th>
+                <th>GD</th>
+                <th>Pts</th>
+              </tr>
+            </thead>
+
+            <!-- League table data populated dynamically from REST API -->
+            <tbody id="leagueTableBody">
+              <tr>
+                <td colspan="10">
+                  Loading league table...
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Main JavaScript file handling API requests and UI rendering -->
+  <script src="script.js"></script>
+</body>
+</html>

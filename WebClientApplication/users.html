@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- Enables responsive layout across different screen sizes --> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Users | Club System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  
+  <div class="dashboard-layout">
+
+    <!-- Sidebar navigation menu -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h2>⚽ Club System</h2>
+      </div>
+
+      <p class="role-label">Admin Dashboard</p>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link admin-nav" style="display: block;">Dashboard</a>
+        <a href="players.html" class="nav-link">Players</a>
+        <a href="teams.html" class="nav-link">Teams</a>
+        <a href="matches.html" class="nav-link">Matches</a>
+        <a href="league-table.html" class="nav-link">League Table</a>
+        <a href="news.html" class="nav-link">News</a>
+        <a href="users.html" class="nav-link admin-nav" style="display: block;">Users</a>
+      </nav>
+
+      <!-- Logout button clears the current user session -->
+      <button onclick="logout()" class="logout-btn">Logout</button>
+    </aside>
+
+    <!-- Main user management page content -->
+    <main class="main-content">
+
+      <!-- User management page header -->
+      <header class="page-header">
+        <h1>User Management</h1>
+        <p>Create and manage user accounts for the club system.</p>
+      </header>
+
+      <!-- Top section containing user creation tools and access information -->
+      <section class="top-grid">
+        <!-- Admin-only form used to create new user accounts -->
+        <div class="card form-card admin-only">
+          <div class="card-header">
+            <h2>Add User</h2>
+            <p>Create a new admin, player, or guest account.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="newUsername">Username</label>
+            <input type="text" id="newUsername" placeholder="Enter username" />
+          </div>
+
+          <div class="form-group">
+            <label for="newEmail">Email</label>
+            <input type="email" id="newEmail" placeholder="Enter email" />
+          </div>
+
+          <div class="form-group">
+            <label for="newPassword">Password</label>
+            <input type="password" id="newPassword" placeholder="Enter password" />
+          </div>
+
+          <div class="form-group">
+            <label for="newRole">Role</label>
+            <select id="newRole">
+              <option value="admin">Admin</option>
+              <option value="player">Player</option>
+              <option value="guest">Guest</option>
+            </select>
+          </div>
+
+          <button class="primary-btn" onclick="addUser()">Create User</button>
+        </div>
+
+        <!-- System access control overview showing role permissions -->
+        <div class="card overview-card">
+          <div class="card-header">
+            <h2>Access Control</h2>
+            <p>Accounts are controlled by administrators only.</p>
+          </div>
+
+          <div class="overview-list">
+            <div class="overview-item">
+              <span>Admin</span>
+              <strong>Full CRUD access</strong>
+            </div>
+
+            <div class="overview-item">
+              <span>Player</span>
+              <strong>View league data</strong>
+            </div>
+
+            <div class="overview-item">
+              <span>Guest</span>
+              <strong>Limited viewing access</strong>
+            </div>
+
+            <div class="overview-item">
+              <span>Security</span>
+              <strong>JWT protected</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dynamic user table populated from the REST API -->
+      <section class="card">
+        <div class="card-header">
+          <h2>All Users</h2>
+          <p>View and remove system accounts.</p>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="league-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+  
+            <!-- User records rendered dynamically using JavaScript -->
+            <tbody id="usersTableBody">
+              <tr>
+                <td colspan="5">Loading users...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Main frontend JavaScript handling API communication and rendering -->
+  <script src="script.js"></script>
+</body>
+</html>

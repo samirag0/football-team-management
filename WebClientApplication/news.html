@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- Enables responsive layout across different screen sizes --> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News | Club System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="dashboard-layout">
+
+    <!-- Sidebar navigation menu -->
+    <aside class="sidebar">
+      <h2>⚽ Club System</h2>
+      <p class="role-label">Club Portal</p>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link admin-nav" style="display: block;">Dashboard</a>
+        <a href="players.html" class="nav-link">Players</a>
+        <a href="teams.html" class="nav-link">Teams</a>
+        <a href="matches.html" class="nav-link">Matches</a>
+        <a href="league-table.html" class="nav-link">League Table</a>
+        <a href="news.html" class="nav-link">News</a>
+        <a href="users.html" class="nav-link admin-nav" style="display: block;">Users</a>
+      </nav>
+
+      <!-- Logout button clears the current user session -->
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </aside>
+
+    <!-- Main news page content -->
+    <main class="main-content">
+
+      <!-- Hero section introducing the club news area -->
+      <header class="page-header news-hero">
+        <div>
+          <h1>Club News</h1>
+          <p>Share announcements, match updates and important club information.</p>
+        </div>
+
+        <div class="news-hero-badge">
+          📰 Latest Updates
+        </div>
+      </header>
+
+      <!-- Admin-only section for publishing new announcements -->
+      <section class="card admin-only news-post-card">
+        <div class="card-header">
+          <h2>Post Announcement</h2>
+          <p>Create a professional club update for players and visitors.</p>
+        </div>
+
+        <!-- News title and category inputs -->
+        <div class="match-form-grid">
+          <div class="form-group">
+            <label for="newsTitle">News Title</label>
+            <input id="newsTitle" type="text" placeholder="e.g. Matchday squad announced" />
+          </div>
+
+          <div class="form-group">
+            <label for="newsCategory">Category</label>
+            <select id="newsCategory">
+              <option value="General">General</option>
+              <option value="Match Update">Match Update</option>
+              <option value="Team News">Team News</option>
+              <option value="Training">Training</option>
+              <option value="Announcement">Announcement</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Main news content textarea -->
+        <div class="form-group">
+          <label for="newsContent">Content</label>
+          <textarea id="newsContent" placeholder="Write the announcement details here..."></textarea>
+        </div>
+
+        <button class="primary-btn" onclick="addNews()">Post News</button>
+      </section>
+
+      <!-- Weather forecast feature using external API integration -->
+      <section class="card weather-news-card">
+        <div class="card-header">
+          <div>
+            <h2>Matchday Weather Forecast</h2>
+            <p>Check current weather for a football location</p>
+          </div>
+        </div>
+
+        <!-- Search input for stadium or city weather -->
+        <div class="weather-search-row">
+
+          <input
+            type="text"
+            id="weatherLocationInput"
+            list="weatherSuggestions"
+            placeholder="Enter stadium or city"
+          />
+
+          <!-- Dynamic weather suggestions -->
+          <datalist id="weatherSuggestions"></datalist>
+
+          <button class="primary-btn" onclick="fetchWeatherForecast()">
+            Check Weather
+          </button>
+        </div>
+
+        <!-- Weather forecast results rendered dynamically -->
+        <div id="weatherResult" class="weather-result">
+        </div>
+      </section>
+
+      <!-- Main news board displaying published announcements -->
+      <section class="card news-board-card">
+        <div class="news-board-header">
+          <div>
+            <h2>Latest News</h2>
+            <p>Browse all published club announcements.</p>
+          </div>
+
+          <!-- News filtering and searching tools -->
+          <div class="news-tools">
+            <input
+              type="text"
+              id="searchNews"
+              placeholder="Search news..."
+              class="news-search-input"
+            />
+
+            <select id="filterNewsCategory" class="news-category-filter">
+              <option value="all">All Categories</option>
+              <option value="General">General</option>
+              <option value="Match Update">Match Update</option>
+              <option value="Team News">Team News</option>
+              <option value="Training">Training</option>
+              <option value="Announcement">Announcement</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- News articles populated dynamically from REST API -->
+        <ul id="newsList" class="news-list"></ul>
+      </section>
+    </main>
+  </div>
+
+  <!-- Main JavaScript file handling API communication and UI updates -->
+  <script src="script.js"></script>
+</body>
+</html>

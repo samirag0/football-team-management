@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Ensures the dashboard scales correctly on different screen sizes -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard | Club System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+<div class="dashboard-layout">
+
+  <!-- Sidebar navigation for main system pages -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <h2>⚽ Club System</h2>
+    </div>
+
+    <p class="role-label">Club Portal</p>
+
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-link admin-nav" style="display: block;">Dashboard</a>
+      <a href="players.html" class="nav-link">Players</a>
+      <a href="teams.html" class="nav-link">Teams</a>
+      <a href="matches.html" class="nav-link">Matches</a>
+      <a href="league-table.html" class="nav-link">League Table</a>
+      <a href="news.html" class="nav-link">News</a>
+      <a href="users.html" class="nav-link admin-nav" style="display: block;">Users</a>
+    </nav>
+    
+    <button onclick="logout()" class="logout-btn">
+      Logout
+    </button>
+  </aside>
+
+  <!-- Main dashboard content -->
+  <main class="main-content">
+
+    <header class="page-header dashboard-header">
+      <div>
+        <h1>Manager Dashboard</h1>
+        <p>
+          Live overview of your football management system.
+        </p>
+      </div>
+
+      <!-- Shows last refresh time and API connection status -->
+      <div class="dashboard-status-row">
+
+      <div class="last-updated-box">
+        Last updated:
+        <span id="dashboardLastUpdated">Loading...</span>
+      </div>
+
+      <div class="system-status-box">
+        <span class="status-dot"></span>
+        API Online
+      </div>
+
+    </div>
+    </header>
+
+    <!-- Top dashboard statistics populated dynamically using JavaScript -->
+    <section class="dashboard-stats-grid">
+
+      <div class="dashboard-stat-card">
+        <div class="dashboard-stat-top">
+          <span>Total Players</span>
+          <div class="dashboard-icon">👤</div>
+        </div>
+
+        <h2 id="totalPlayers">0</h2>
+
+        <p>Registered across all squads</p>
+      </div>
+
+      <div class="dashboard-stat-card">
+        <div class="dashboard-stat-top">
+          <span>Total Teams</span>
+          <div class="dashboard-icon">🛡️</div>
+        </div>
+
+        <h2 id="totalTeams">0</h2>
+
+        <p>Currently managed clubs</p>
+      </div>
+
+      <div class="dashboard-stat-card">
+        <div class="dashboard-stat-top">
+          <span>Total Matches</span>
+          <div class="dashboard-icon">⚽</div>
+        </div>
+
+        <h2 id="totalMatches">0</h2>
+
+        <p>Fixtures and completed games</p>
+      </div>
+
+      <div class="dashboard-stat-card">
+        <div class="dashboard-stat-top">
+          <span>Average Age</span>
+          <div class="dashboard-icon">📊</div>
+        </div>
+
+        <h2 id="averageAge">0</h2>
+
+        <p>Average squad age</p>
+      </div>
+
+    </section>
+
+    <!-- Featured dashboard cards for top scorer and upcoming fixture -->
+    <section class="dashboard-feature-grid">
+
+      <!-- TOP SCORER -->
+      <div class="dashboard-feature-card top-scorer-card">
+
+        <div class="feature-card-header">
+          <h2>Top Scorer</h2>
+          <span>Leading player</span>
+        </div>
+
+        <div id="dashboardTopScorer" class="dashboard-top-player">
+          Loading top scorer...
+        </div>
+
+      </div>
+
+      <!-- NEXT FIXTURE -->
+      <div class="dashboard-feature-card next-fixture-card">
+
+        <div class="feature-card-header">
+          <h2>Next Fixture</h2>
+          <span>Upcoming match</span>
+        </div>
+
+        <div id="dashboardNextFixture" class="dashboard-next-match">
+          Loading fixture...
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Lower dashboard panels showing recent player and match activity -->
+    <section class="dashboard-bottom-grid">
+
+      <!-- RECENT PLAYERS -->
+      <div class="dashboard-panel">
+
+        <div class="feature-card-header">
+          <h2>Recent Players</h2>
+          <span>Latest registrations</span>
+        </div>
+
+        <ul id="recentPlayersList" class="dashboard-list">
+          <li>Loading players...</li>
+        </ul>
+
+      </div>
+
+      <!-- RECENT MATCHES -->
+      <div class="dashboard-panel">
+
+        <div class="feature-card-header">
+          <h2>Recent Results</h2>
+          <span>Latest completed matches</span>
+        </div>
+
+        <ul id="recentMatchesList" class="dashboard-list">
+          <li>Loading matches...</li>
+        </ul>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+<!-- Main JavaScript file used to fetch API data and render dashboard content -->
+<script src="script.js"></script>
+
+</body>
+</html>

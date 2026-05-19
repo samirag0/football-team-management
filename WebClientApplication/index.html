@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Football Manager System | Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-body">
+
+  <!-- Login card for user authentication -->
+  <div class="login-card">
+    <h1>⚽ Football Manager</h1>
+    <p class="login-subtitle">Club Management Portal</p>
+
+    <!-- Login input fields -->
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+
+    <!-- Displays login validation or error messages -->
+    <p id="message"></p>
+
+    <!-- Demo credentials used for testing different user roles -->
+    <div class="demo-users">
+      <p><strong>Demo Logins</strong></p>
+      <p>Admin: admin / admin123</p>
+      <p>Player: player / player123</p>
+      <p>Guest: guest / guest123</p>
+    </div>
+  </div>
+
+  <script>
+    // Authenticate user against the REST API
+    async function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      
+      // Validate that both fields have been entered
+      if (!username || !password) {
+        document.getElementById("message").innerText = "Please enter both username and password.";
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:3000/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+        
+        // Store authenticated user details and JWT token locally
+        if (res.status === 200) {
+          localStorage.setItem("user", JSON.stringify(data.user));
+          localStorage.setItem("token", data.token);
+          
+          // Redirect users based on their role
+          if (data.user.role === "admin") {
+            window.location.href = "dashboard.html";
+          } else if (data.user.role === "player") {
+            window.location.href = "league-table.html";
+          } else {
+            window.location.href = "news.html";
+          }
+        } else {
+          document.getElementById("message").innerText = data.message || "Login failed.";
+        }
+      } catch (error) {
+        document.getElementById("message").innerText = "Could not connect to the server.";
+      }
+    }
+  </script>
+
+</body>
+</html>
