@@ -1,6 +1,4 @@
-DROP DATABASE IF EXISTS footballdb;
-CREATE DATABASE footballdb;
-USE footballdb;
+USE defaultdb;
 
 CREATE TABLE Teams (
     team_id INT AUTO_INCREMENT PRIMARY KEY,

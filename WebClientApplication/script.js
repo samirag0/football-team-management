@@ -1,13 +1,27 @@
 /* API CONFIGURATION - Stores all backend REST API endpoint URLs used by the frontend. */
 
-const API_URL = "http://localhost:3000/api/players";
-const TEAMS_API_URL = "http://localhost:3000/api/teams";
-const MATCHES_API_URL = "http://localhost:3000/api/matches";
-const DASHBOARD_API_URL = "http://localhost:3000/api/dashboard/stats";
-const LEAGUE_API_URL = "http://localhost:3000/api/league-table";
-const NEWS_API_URL = "http://localhost:3000/api/news";
-const PLAYER_STATS_API_URL = "http://localhost:3000/api/player-stats";
-const USERS_API_URL = "http://localhost:3000/api/users";
+const API_URL = "https://football-team-management-kojs.onrender.com/api/players";
+
+const TEAMS_API_URL =
+  "https://football-team-management-kojs.onrender.com/api/teams";
+
+const MATCHES_API_URL =
+  "https://football-team-management-kojs.onrender.com/api/matches";
+
+const DASHBOARD_API_URL =
+  "https://football-team-management-kojs.onrender.com/api/dashboard/stats";
+
+const LEAGUE_API_URL =
+  "https://football-team-management-kojs.onrender.com/api/league-table";
+
+const NEWS_API_URL =
+  "https://football-team-management-kojs.onrender.com/api/news";
+
+const PLAYER_STATS_API_URL =
+  "https://football-team-management-kojs.onrender.com/api/player-stats";
+
+const USERS_API_URL =
+  "https://football-team-management-kojs.onrender.com/api/users";
 
 /* GLOBAL STATE - Stores API data locally so it can be reused for searching, filtering,
    editing and dynamic rendering without repeatedly requesting the same data. */
