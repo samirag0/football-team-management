@@ -18,7 +18,7 @@ const userRoutes = require("./routes/userRoutes");
 const app = express();
 
 // Use deployment port if available, otherwise default to 3000 locally
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Enable CORS for frontend-backend communication
 app.use(cors());
