@@ -1,4 +1,5 @@
 const mysql = require("mysql2");
+require("dotenv").config();
 
 // Create MySQL database connection using local database credentials
 const db = mysql.createConnection({
